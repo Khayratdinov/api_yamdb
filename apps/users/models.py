@@ -4,6 +4,9 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 # ============================================================================ #
 
+
+# ================================ ROLE CHOICE =============================== #
+
 class RoleChoice(models.TextChoices):
 
     USER = "User", _("User")
@@ -11,62 +14,53 @@ class RoleChoice(models.TextChoices):
     ADMIN = "Admin", _("Admin")
 
 
-class User(AbstractUser):
 
+
+# =================================== USER =================================== #
+class User(AbstractUser):
 
     username = models.CharField(
         'Логин',
         max_length=150,
         unique=True,
-        help_text='Ник пользователя',
+        help_text='User name',
         validators=[
             RegexValidator(
                 regex=r'^[\w.@+-]+',
-                message=('Ник должен быть '
-                         + 'комбинацией букв,'
-                         + 'цифр и символов @.+-_')
+                message=('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.')
             )
         ]
     )
     password = models.CharField(
-        'Пароль',
         max_length=128,
         blank=True,
-        help_text='Пароль')
+    )
     email = models.EmailField(
-        'e-mail',
         max_length=254,
         unique=True,
-        help_text='Электронная почта',
     )
     confirmation_code = models.CharField(
-        'Код',
         blank=True,
         max_length=9,
-        help_text='Код подтверждения'
+        help_text='Confirmation code'
     )
     first_name = models.CharField(
-        'Имя',
         max_length=150,
         blank=True,
-        help_text='Имя пользователя',
     )
     last_name = models.CharField(
-        'Фамилия',
         max_length=150,
         blank=True,
-        help_text='Фамилия пользователя',
     )
     bio = models.TextField(
-        'Биография',
         blank=True,
-        help_text='Биография пользователя',
+        help_text='User biography',
     )
     role = models.TextField(
-        'Роль',
+        'Role',
         choices=RoleChoice.choices,
         default=RoleChoice.USER,
-        help_text='Роль пользователя',
+        help_text='Role user',
     )
 
     class Meta:
