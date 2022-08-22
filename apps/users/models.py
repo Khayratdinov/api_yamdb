@@ -63,6 +63,26 @@ class User(AbstractUser):
                             help_text='Role user',
     )
 
+    confirmation_code = models.CharField(
+                                         max_length=255,
+                                         null=True,
+                                         blank=False,
+    )
+
+
+    @property
+    def is_user(self):
+        return self.role == RoleChoice.USER
+
+    @property
+    def is_admin(self):
+        return self.role == RoleChoice.ADMIN
+
+    @property
+    def is_moderator(self):
+        return self.role == RoleChoice.MODERATOR
+
+
     class Meta:
         ordering = ('username',)
 
