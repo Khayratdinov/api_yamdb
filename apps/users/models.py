@@ -36,31 +36,31 @@ class User(AbstractUser):
         blank=True,
     )
     email = models.EmailField(
-        max_length=254,
-        unique=True,
+                              max_length=254,
+                              unique=True,
     )
-    confirmation_code = models.CharField(
-        blank=True,
-        max_length=9,
-        help_text='Confirmation code'
-    )
+
     first_name = models.CharField(
-        max_length=150,
-        blank=True,
+                                  max_length=150,
+                                  blank=True,
+                                  null=True,
     )
     last_name = models.CharField(
-        max_length=150,
-        blank=True,
+                                 max_length=150,
+                                 blank=True,
+                                 null=True,
     )
+
     bio = models.TextField(
-        blank=True,
-        help_text='User biography',
+                            blank=True,
+                            null=True,
+                            help_text='User biography',
     )
+
     role = models.TextField(
-        'Role',
-        choices=RoleChoice.choices,
-        default=RoleChoice.USER,
-        help_text='Role user',
+                            choices=RoleChoice.choices,
+                            default=RoleChoice.USER,
+                            help_text='Role user',
     )
 
     class Meta:
